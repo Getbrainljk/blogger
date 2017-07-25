@@ -2,6 +2,7 @@ class ArticlesController < ApplicationController
 
   include ArticlesHelper
 
+
   def index
     @articles = Article.all
   end
@@ -27,13 +28,14 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    temp = Article.find(params[:id])
-    flash_print = temp.title
-    temp.destroy
+    @article = Article.find(params[:id])
 
+    flash_print = @article.title
+
+    @article.destroy
     flash.notice = "Article '#{flash_print}' Deleted!"
 
-    redirect_to articles_url
+    redirect_to articles_path
   end
 
   def edit

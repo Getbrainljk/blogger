@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Ankan's website</title>
+    <title>yolo's website</title>
     <%= csrf_meta_tags %>
     <%= favicon_link_tag 'favicone_canard.jpeg' %>
 
@@ -9,8 +9,31 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-  <p class="flash"><%= flash.notice %></p>
-  <%= yield %>
+  <p class="flash">
+    <%= flash.notice %>
+  </p>
+  <div id="container">
+    <div id="content">
+      <%= yield %>
+      <hr>
+      <h6>
+        <% if logged_in? %>
+            <%= "Logged in as #{current_user.email}" %>
+        <% else %>
+            Logged out
+        <% end %>
+      </h6>
+    </div>
+    <hr>
+    <h6>
+      <% if logged_in? %>
+          <%= "Logged in as #{current_user.email}" %>
+          <%= link_to "(logout)", logout_path %>
+      <% else %>
+          <%= link_to "(login)", login_path %>
+      <% end %>
+    </h6>
+  </div>
+
   </body>
 </html>

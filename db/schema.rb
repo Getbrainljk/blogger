@@ -10,13 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170723144603) do
+ActiveRecord::Schema.define(version: 20170725155127) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
+  create_table "attachments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "authors", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "crypted_password", null: false
+    t.string "salt", null: false
+    t.string "username", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_authors_on_email", unique: true
   end
 
   create_table "comments", force: :cascade do |t|
@@ -26,6 +45,21 @@ ActiveRecord::Schema.define(version: 20170723144603) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_comments_on_article_id"
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer "tag_id"
+    t.integer "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_taggings_on_article_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
